@@ -2,12 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="blue_light">#ADD8E6</color>
-    <color name="cian">#00FFFF</color>
-    <color name="SlateGray">#C6E2FF</color>
-    <color name="RoyalBlue">#4169E1</color>
-    <color name="PinkFlamingo">#FC74FD</color>
     <color name="Scarlet">#FF2400</color>
     <color name="VeryDarkGray">#606060</color>
     <color name="Gainsboro">#DDDDDD</color>
+    <color name="Gray77">#C4C4C4</color>
 </resources>

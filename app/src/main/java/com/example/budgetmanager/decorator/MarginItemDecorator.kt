@@ -15,8 +15,8 @@ class MarginItemDecorator(private val marginSize: Int): RecyclerView.ItemDecorat
             if (parent.getChildAdapterPosition(view) == 0) {
                 top = marginSize
             }
-            left = 64
-            right = 64
+            left = marginSize
+            right = marginSize
             bottom = marginSize
         }
     }

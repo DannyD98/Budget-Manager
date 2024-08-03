@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -15,7 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/button_elements_background">
+            android:background="@drawable/recycler_view_element_background">
 
             <ImageButton
                 android:id="@+id/expenseDeleteBtn"
@@ -23,13 +23,9 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="#00BADDFA"
-                android:backgroundTint="#BADDFA"
-                android:contentDescription="@string/balance"
-                android:elevation="20dp"
-                android:src="@android:drawable/ic_delete"
-                app:layout_constraintBottom_toTopOf="@+id/expenseEditBtn"
+                android:background="#00FFFFFF"
+                android:contentDescription="@string/delete_title"
+                android:src="@drawable/icons8_trash_48___"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ImageContrastCheck" />
@@ -39,39 +35,55 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="#00BADDFA"
+                android:layout_marginEnd="8dp"
+                android:background="#00FFFFFF"
                 android:contentDescription="@android:string/cut"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expenseDeleteBtn"
-                app:srcCompat="@android:drawable/ic_menu_edit"
-                app:tint="@color/black"
+                android:scaleType="center"
+                android:src="@drawable/icons8_edit_48___"
+                app:layout_constraintEnd_toStartOf="@+id/expenseDeleteBtn"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ImageContrastCheck" />
 
-            <TextView
-                android:id="@+id/expenseValue"
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
-                android:inputType="number|numberDecimal|numberSigned"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:layout_marginEnd="32dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TextViewEdits" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/expenseValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:layout_weight="0"
+                    android:inputType="number|numberDecimal|numberSigned"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:ignore="TextViewEdits" />
+
+                <TextView
+                    android:id="@+id/expenseCurrency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="0"
+                    android:text="@string/bgn_currency"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/expenseInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="128dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -82,10 +94,12 @@
                 android:id="@+id/expenseType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="128dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/expenseDate"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/expenseInfo" />
 
@@ -93,17 +107,15 @@
                 android:id="@+id/expenseDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="128dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="24dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expenseType" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+</FrameLayout>

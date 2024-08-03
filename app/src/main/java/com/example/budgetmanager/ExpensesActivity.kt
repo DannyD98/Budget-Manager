@@ -2,6 +2,7 @@ package com.example.budgetmanager
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -36,7 +37,8 @@ class ExpensesActivity : AppCompatActivity() {
         val backButton: Button = findViewById(R.id.expensesBackBtn)
         val budgetTitle: TextView = findViewById(R.id.budgetLogName)
         val budgetVal: TextView = findViewById(R.id.budgetVal)
-        val currentBalance: TextView = findViewById(R.id.balanceVal)
+        val currentSpent: TextView = findViewById(R.id.SpentVal)
+        val progressBar: ProgressBar = findViewById(R.id.expenseProgressBar)
 
         //ViewModel for the Expenses related data
         expenseViewModel = ViewModelProvider(this)[ExpenseViewModel::class.java]
@@ -62,7 +64,9 @@ class ExpensesActivity : AppCompatActivity() {
 
         //Observer for change of the Balance data
         expenseViewModel?.balance?.observe(this) { balance ->
-            currentBalance.text = String.format(Locale.US,"%.2f", balance)
+            val spentValue = (budgetValue - balance)
+            currentSpent.text = String.format(Locale.US,"%.2f", spentValue)
+            progressBar.progress = ((spentValue * 100) / budgetValue).toInt()
         }
 
         //UI Updates

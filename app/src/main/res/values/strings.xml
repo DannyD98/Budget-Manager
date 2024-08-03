@@ -7,16 +7,16 @@
     <string name="add">Add</string>
     <string name="add_expense">New expense</string>
     <string name="budget">Budget:</string>
-    <string name="balance">Balance:</string>
+    <string name="spent">Spent:</string>
     <string name="back">Back</string>
     <string name="enter_budget">Enter budget</string>
     <string name="enter_expense_info">Enter expense info</string>
     <string name="enter_expense_cost">Enter expense cost</string>
     <string name="enter_expense_type">Enter expense Type</string>
     <string name="update">Update</string>
-    <string name="delete_icon">Delete Icon</string>
     <string name="delete_title">Delete</string>
     <string name="are_you_sure_delete">Are you sure you want to delete this item?</string>
+    <string name="bgn_currency">BGN</string>
     <string-array name="expense_types">
         <item>Personal</item>
         <item>Food</item>
