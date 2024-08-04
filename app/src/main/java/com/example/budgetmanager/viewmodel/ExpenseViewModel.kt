@@ -22,8 +22,7 @@ class ExpenseViewModel(application: Application): AndroidViewModel(application) 
         budgetRepository = BudgetRepository(AppDatabase.getDatabase(application).budgetDao())
     }
 
-    fun loadExpenses(budgetId: Long)
-    {
+    fun loadExpenses(budgetId: Long) {
         expenses = expenseRepository.getExpenses(budgetId)
         balance = budgetRepository.getBalance(budgetId)
     }
@@ -46,8 +45,7 @@ class ExpenseViewModel(application: Application): AndroidViewModel(application) 
         }
     }
 
-    fun updateBalance(balance: Float, budgetId: Long)
-    {
+    fun updateBalance(balance: Float, budgetId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             budgetRepository.updateBalance(balance, budgetId)
         }

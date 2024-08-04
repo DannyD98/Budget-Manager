@@ -11,7 +11,7 @@
         android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="34sp"
@@ -19,19 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <android.widget.Button
-        android:id="@+id/addExpenseBtn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button_background"
-        android:text="@string/add_expense"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/expensesBackBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TextSizeCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/expensesList"
@@ -124,6 +111,19 @@
     </LinearLayout>
 
     <android.widget.Button
+        android:id="@+id/addExpenseBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_background"
+        android:text="@string/add_expense"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/expensesBackBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextSizeCheck" />
+
+    <android.widget.Button
         android:id="@+id/expensesBackBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -136,18 +136,19 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
-        android:id="@+id/expenseProgressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:indeterminate="false"
-        android:indeterminateBehavior="repeat"
-        android:indeterminateOnly="false"
-        android:progressDrawable="@drawable/progress_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+    android:id="@+id/expenseProgressBar"
+    style="@android:style/Widget.ProgressBar.Horizontal"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:indeterminate="false"
+    android:indeterminateBehavior="repeat"
+    android:indeterminateOnly="false"
+    android:progressDrawable="@drawable/progress_horizontal"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

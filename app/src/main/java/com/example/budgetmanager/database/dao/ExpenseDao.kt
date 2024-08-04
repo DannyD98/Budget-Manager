@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.MapColumn
 import androidx.room.Query
 import androidx.room.Update
 import com.example.budgetmanager.database.model.ExpenseData
@@ -21,4 +22,7 @@ interface ExpenseDao {
 
     @Update
     suspend fun updateExpense(expenseData: ExpenseData)
+
+    @Query("Select expenseType, sum(expenseVal) as expenseSum from expense where budgetID = :budgetId group by expenseType")
+    fun getExpensesSumByType(budgetId: Long): LiveData<Map<@MapColumn(columnName = "expenseType") String, @MapColumn(columnName = "expenseSum") Float>>
 }

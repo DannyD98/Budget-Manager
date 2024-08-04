@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -25,14 +26,14 @@ class ExpenseInputDialog(
     private val budgetId: Long,
     private var expenseAction: ExpenseAction,
     private val expenseData: ExpenseData?
-): Dialog(context) {
+): Dialog(context, R.style.DialogStyle) {
     private var expenseType = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //Configure the Dialog content and Layout
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.expense_input_dialog)
         window?.setBackgroundDrawableResource(R.drawable.dialog_background)
 

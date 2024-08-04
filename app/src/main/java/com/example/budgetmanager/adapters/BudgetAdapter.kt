@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.budgetmanager.ExpensesActivity
 import com.example.budgetmanager.R
+import com.example.budgetmanager.StatisticsActivity
 import com.example.budgetmanager.database.model.BudgetData
 import com.example.budgetmanager.dialog.ConfirmationDialog
 import com.example.budgetmanager.viewmodel.BudgetViewModel
@@ -66,7 +66,17 @@ class BudgetAdapter(
 
         //Stats button click handler
         holder.budgetStatsBtn.setOnClickListener {
-            Toast.makeText(this.context, "Not yet implemented", Toast.LENGTH_LONG).show()
+            val intent = Intent(context, StatisticsActivity::class.java)
+            val extras = Bundle()
+            val spent = dataset[position].budgetValue - dataset[position].balanceValue
+
+            extras.putLong("ID", dataset[position].budgetId)
+            extras.putString("Title", dataset[position].budgetName)
+            extras.putFloat("Spent", spent)
+            intent.putExtras(extras)
+
+            context.startActivity(intent)
+            //Toast.makeText(this.context, "Not yet implemented", Toast.LENGTH_LONG).show()
         }
     }
 
