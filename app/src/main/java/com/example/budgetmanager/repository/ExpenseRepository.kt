@@ -18,4 +18,6 @@ class ExpenseRepository(private val expenseDao: ExpenseDao) {
     suspend fun updateExpense(expenseData: ExpenseData) {
         expenseDao.updateExpense(expenseData)
     }
+
+    fun getExpensesSumByType(budgetId: Long): LiveData<Map<String, Float>> = expenseDao.getExpensesSumByType(budgetId)
 }

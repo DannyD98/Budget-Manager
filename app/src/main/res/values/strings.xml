@@ -17,6 +17,8 @@
     <string name="delete_title">Delete</string>
     <string name="are_you_sure_delete">Are you sure you want to delete this item?</string>
     <string name="bgn_currency">BGN</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
     <string-array name="expense_types">
         <item>Personal</item>
         <item>Food</item>

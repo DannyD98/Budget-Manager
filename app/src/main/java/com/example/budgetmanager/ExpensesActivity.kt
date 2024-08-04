@@ -20,7 +20,7 @@ class ExpensesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.budget_expenses_activity)
+        setContentView(R.layout.activity_expenses)
 
         //Access received data from MainActivity
         val intent = intent
