@@ -11,6 +11,6 @@ class CustomValueFormatter : ValueFormatter() {
     }
 
     override fun getFormattedValue(value: Float): String {
-        return decimalFormat.format(value)
+        return decimalFormat.format(value) + " BGN"
     }
 }
