@@ -19,16 +19,4 @@
     <string name="bgn_currency">BGN</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string-array name="expense_types">
-        <item>Personal</item>
-        <item>Food</item>
-        <item>Taxes</item>
-        <item>Gift</item>
-        <item>Shopping</item>
-        <item>Entertainment</item>
-        <item>Home</item>
-        <item>Car</item>
-        <item>Medical</item>
-        <item>Other</item>
-    </string-array>
 </resources>

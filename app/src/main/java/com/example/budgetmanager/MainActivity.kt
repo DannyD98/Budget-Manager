@@ -12,24 +12,25 @@ import com.example.budgetmanager.viewmodel.BudgetViewModel
 
 class MainActivity : AppCompatActivity() {
     private var budgetViewModel: BudgetViewModel? = null
+    lateinit var recyclerView: RecyclerView
+    lateinit var addBudgetLogBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //View model for Budget related data
+        // View model for Budget related data
         budgetViewModel = ViewModelProvider(this)[BudgetViewModel::class.java]
 
-        //Get UI elements
-        val recyclerView: RecyclerView = findViewById(R.id.BudgetsList)
-        val addBudgetLogBtn: Button = findViewById(R.id.NewBudgetBtn)
+        // Access layout view elements
+        initViews()
 
-        //Configure RecyclerView, Adapter and Decorator
+        // Configure RecyclerView, Adapter and Decorator
         val budgetAdapter = BudgetAdapter(this, budgetViewModel!!)
         recyclerView.adapter = budgetAdapter
         recyclerView.addItemDecoration(MarginItemDecorator(32))
 
-        //Observer for change of the data from the viewModel
+        // Observer for change of the data from the ViewModel containing budgets
         budgetViewModel?.budgets?.observe(this) { budgets ->
             budgets.let { budgetAdapter.updateDataset(it) }
             //Perform scroll to the latest item in the list
@@ -38,12 +39,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //Button Handlers
+        // Add Button click Handler
         addBudgetLogBtn.setOnClickListener {
             //Open a new dialog and process the Add budget
             val budgetInputDialog = BudgetInputDialog(this, budgetViewModel!!)
             budgetInputDialog.show()
         }
+    }
+
+    private fun initViews() {
+        recyclerView = findViewById(R.id.BudgetsList)
+        addBudgetLogBtn = findViewById(R.id.NewBudgetBtn)
     }
 
     private fun initDataset()
