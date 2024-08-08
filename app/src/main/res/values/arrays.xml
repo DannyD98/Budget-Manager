@@ -14,14 +14,14 @@
     </string-array>
 
     <array name="custom_colors">
-        <item>@color/red_A700</item>
-        <item>@color/deep_purple_A700</item>
-        <item>@color/light_blue_A700</item>
-        <item>@color/green_A700</item>
-        <item>@color/yellow_A700</item>
-        <item>@color/pink_A700</item>
-        <item>@color/deep_orange_A700</item>
-        <item>@color/indigo_A700</item>
-        <item>@color/blue_grey_900</item>
+        <item>@color/red_300</item>
+        <item>@color/deep_purple_300</item>
+        <item>@color/light_blue_300</item>
+        <item>@color/green_300</item>
+        <item>@color/yellow_300</item>
+        <item>@color/deep_orange_300</item>
+        <item>@color/pink_300</item>
+        <item>@color/blue_grey_300</item>
+        <item>@color/brown_300</item>
     </array>
 </resources>

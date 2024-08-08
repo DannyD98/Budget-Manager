@@ -1,5 +1,6 @@
 package com.example.budgetmanager
 
+import android.content.res.Configuration
 import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.Button
@@ -67,6 +68,7 @@ class StatisticsActivity : AppCompatActivity() {
 
     private fun configurePieChart() {
         val expenseCenterText = String.format(Locale.US, "%.2f", spent) + " BGN\nTotal expenses"
+        val orientation = resources.configuration.orientation
 
         // Configuration for the center of the PieChart
         pieChart.setCenterTextSize(16f)
@@ -83,15 +85,22 @@ class StatisticsActivity : AppCompatActivity() {
 
         // Configure the PieChart Legend
         pieChart.legend.textSize = 16f
-        pieChart.legend.xEntrySpace = 32f
-        pieChart.legend.yEntrySpace = 16f
-        pieChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-        pieChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-        pieChart.legend.orientation = Legend.LegendOrientation.HORIZONTAL
-        pieChart.legend.isWordWrapEnabled = true
+        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            pieChart.legend.xEntrySpace = 32f
+            pieChart.legend.yEntrySpace = 8f
+            pieChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            pieChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            pieChart.legend.orientation = Legend.LegendOrientation.HORIZONTAL
+            pieChart.legend.isWordWrapEnabled = true
+        } else {
+            pieChart.legend.yEntrySpace = 4f
+            pieChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            pieChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+            pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            pieChart.legend.isWordWrapEnabled = false
+        }
 
         pieChart.animateY(1000)
-        pieChart.invalidate()
     }
 
     private fun updatePieChartData(sum: Map<String, Float>?) {

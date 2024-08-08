@@ -23,6 +23,6 @@ interface ExpenseDao {
     @Update
     suspend fun updateExpense(expenseData: ExpenseData)
 
-    @Query("Select expenseType, sum(expenseVal) as expenseSum from expense where budgetID = :budgetId group by expenseType")
+    @Query("Select expenseType, sum(expenseVal) as expenseSum from expense where budgetID = :budgetId group by expenseType order by expenseSum DESC")
     fun getExpensesSumByType(budgetId: Long): LiveData<Map<@MapColumn(columnName = "expenseType") String, @MapColumn(columnName = "expenseSum") Float>>
 }
