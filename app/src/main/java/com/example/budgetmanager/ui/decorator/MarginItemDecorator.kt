@@ -1,4 +1,4 @@
-package com.example.budgetmanager.decorator
+package com.example.budgetmanager.ui.decorator
 
 import android.graphics.Rect
 import android.view.View
