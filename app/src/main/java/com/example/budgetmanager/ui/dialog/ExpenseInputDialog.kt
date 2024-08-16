@@ -1,4 +1,4 @@
-package com.example.budgetmanager.dialog
+package com.example.budgetmanager.ui.dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -43,7 +43,7 @@ class ExpenseInputDialog(
         val expenseCost: EditText = findViewById(R.id.expenseValueInput)
         val expenseAddBtn: Button = findViewById(R.id.expenseAddBtn)
 
-        //Create an ArrayAdapter to be used for the Expense Type Spinner
+        // Create an ArrayAdapter to be used for the Expense Type Spinner
         ArrayAdapter.createFromResource(
             this.context,
             R.array.expense_types,
@@ -55,7 +55,7 @@ class ExpenseInputDialog(
             expenseType.adapter = adapter
         }
 
-        //Define the behavior in case of selecting a Spinner element and default
+        // Define the behavior in case of selecting a Spinner element and default
         expenseType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // Handle the selected item
@@ -63,12 +63,12 @@ class ExpenseInputDialog(
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                //Use Personal in case of no selection
+                // Use Personal in case of no selection
                 this@ExpenseInputDialog.expenseType = "Personal"
             }
         }
 
-        //Configure the dialog in case of Update
+        // Configure the dialog in case of Update
         if(expenseAction == ExpenseAction.Update) {
             //Expense Type Spinner
             this.expenseType = expenseData!!.expenseType
@@ -79,21 +79,21 @@ class ExpenseInputDialog(
                 else -> expenseType.setSelection(typeIndex)
             }
 
-            //Set EditText fields to be edited
+            // Set EditText fields to be edited
             expenseCost.setText(expenseData.expenseVal.toString())
             expenseInfo.setText(expenseData.expenseDescription)
             expenseType.setSelection(typeOptions.indexOf(expenseData.expenseType))
 
-            //Switch to Update button
+            // Switch to Update button
             expenseAddBtn.text = context.getString(R.string.update)
         }
 
-        //Close the dialog handle
+        // Close the dialog handle
         closeBtn.setOnClickListener {
             dismiss()
         }
 
-        //Behavior in case of Add button click
+        // Behavior in case of Add button click
         expenseAddBtn.setOnClickListener {
             val infoIn = expenseInfo.text.toString()
             val costIn = expenseCost.text.toString()
@@ -120,10 +120,10 @@ class ExpenseInputDialog(
     private fun addExpense(infoIn: String, costIn: String) {
         val expense = ExpenseData(expenseVal = costIn.toFloat(), expenseDescription = infoIn, expenseDate = LocalDate.now().toString(), expenseType = expenseType, budgetID = budgetId)
 
-        //Add the new expense entry to DB
+        // Add the new expense entry to DB
         expenseViewModel.addExpense(expense)
 
-        //Update balance
+        // Update balance
         val newBalance = expenseViewModel.balance.value?.minus(expense.expenseVal)
         if (newBalance != null) {
             expenseViewModel.updateBalance(newBalance, budgetId)
@@ -136,20 +136,20 @@ class ExpenseInputDialog(
             val newBalance: Float
             val expenseDiff = costIn.toFloat() - expenseData.expenseVal
 
-            //Update the fields of the edit expense
+            // Update the fields of the edit expense
             expenseData.expenseDescription = infoIn
             expenseData.expenseVal = costIn.toFloat()
             expenseData.expenseType = expenseType
             expenseData.expenseDate = LocalDate.now().toString()
 
-            //Update the expense in DB
+            // Update the expense in DB
             expenseViewModel.updateExpense(expenseData)
 
-            //Update balance
+            // Update balance
             newBalance = expenseViewModel.balance.value?.minus(expenseDiff)!!
             expenseViewModel.updateBalance(newBalance, budgetId)
 
-            //Close the dialog on update
+            // Close the dialog on update
             dismiss()
         }
     }

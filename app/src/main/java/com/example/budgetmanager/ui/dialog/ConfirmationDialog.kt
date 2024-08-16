@@ -1,4 +1,4 @@
-package com.example.budgetmanager.dialog
+package com.example.budgetmanager.ui.dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -22,15 +22,15 @@ class ConfirmationDialog(context: Context, private val budgetViewModel: BudgetVi
         val cancelButton: Button = findViewById(R.id.cancelBtn)
 
         yesButton.setOnClickListener {
-            //Delete the passed budget entry
+            // Delete the passed budget entry
             budgetViewModel.removeBudget(budgetData)
 
-            //Close the dialog
+            // Close the dialog
             dismiss()
         }
 
         cancelButton.setOnClickListener {
-            //Delete canceled - Close the dialog
+            // Delete canceled - Close the dialog
             dismiss()
         }
     }

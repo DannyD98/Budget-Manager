@@ -1,4 +1,4 @@
-package com.example.budgetmanager
+package com.example.budgetmanager.ui
 
 import android.content.res.Configuration
 import android.graphics.Typeface
@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.budgetmanager.R
 import com.example.budgetmanager.viewmodel.StatisticsViewModel
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -16,12 +17,9 @@ import com.github.mikephil.charting.data.PieEntry
 import java.util.Locale
 
 class StatisticsActivity : AppCompatActivity() {
+    private lateinit var budgetTitle: TextView
     private lateinit var backBtn: Button
-    private lateinit var budgetName: TextView
     private lateinit var pieChart: PieChart
-    private var budgetId: Long = 0
-    private var budgetTitle: String = "Unknown"
-    private var spent: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,19 +30,17 @@ class StatisticsActivity : AppCompatActivity() {
 
         // Process extras coming with the intent that started the Activity
         val extras = intent.extras
-        if (extras != null) {
-            budgetId = extras.getLong("ID")
-            budgetTitle = extras.getString("Title")!!
-            spent = extras.getFloat("Spent")
-        }
+        val budgetId = extras?.getLong("ID") ?: 0
+        val budgetTitle = extras?.getString("Title") ?: "Unknown"
+        val spent = extras?.getFloat("Spent") ?: 0f
 
         val statisticsViewModel = ViewModelProvider(this)[StatisticsViewModel::class.java]
 
         // Update the Budget title with the Extra value coming from Main Activity
-        budgetName.text = budgetTitle
+        this.budgetTitle.text = budgetTitle
 
         // Configure the UI parameters of the PieChart
-        configurePieChart()
+        configurePieChart(spent)
 
         // Fetch data through ViewModel
         statisticsViewModel.getExpensesSumByType(budgetId)
@@ -62,12 +58,12 @@ class StatisticsActivity : AppCompatActivity() {
 
     private fun initViews() {
         backBtn = findViewById(R.id.statisticsBackBtn)
-        budgetName = findViewById(R.id.statisticsBudgetName)
+        budgetTitle = findViewById(R.id.statisticsBudgetName)
         pieChart = findViewById(R.id.statisticsPieChart)
     }
 
-    private fun configurePieChart() {
-        val expenseCenterText = String.format(Locale.US, "%.2f", spent) + " BGN\nTotal expenses"
+    private fun configurePieChart(totalSpent: Float) {
+        val expenseCenterText = String.format(Locale.US, "%.2f", totalSpent) + " BGN\nTotal expenses"
         val orientation = resources.configuration.orientation
 
         // Configuration for the center of the PieChart
@@ -103,12 +99,12 @@ class StatisticsActivity : AppCompatActivity() {
         pieChart.animateY(1000)
     }
 
-    private fun updatePieChartData(sum: Map<String, Float>?) {
+    private fun updatePieChartData(sum: Map<String, Float>) {
         val customColors: List<Int> = resources.getIntArray(R.array.custom_colors).toList()
         val entries = ArrayList<PieEntry>()
 
         // Add each expense category and it's sum as PieEntry
-        sum?.forEach { (label, value) ->
+        sum.forEach { (label, value) ->
             entries.add(PieEntry(value, label))
         }
 

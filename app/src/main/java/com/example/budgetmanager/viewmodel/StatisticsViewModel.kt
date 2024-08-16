@@ -7,7 +7,7 @@ import com.example.budgetmanager.database.AppDatabase
 import com.example.budgetmanager.repository.ExpenseRepository
 
 class StatisticsViewModel(application: Application): AndroidViewModel(application) {
-    val expenseRepository: ExpenseRepository
+    private val expenseRepository: ExpenseRepository
     lateinit var expensesSum: LiveData<Map<String, Float>>
 
     init {

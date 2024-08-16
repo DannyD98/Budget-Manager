@@ -1,4 +1,4 @@
-package com.example.budgetmanager.dialog
+package com.example.budgetmanager.ui.dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -37,11 +37,11 @@ class BudgetInputDialog(context: Context, private val budgetViewModel: BudgetVie
             if(budgetInText.isNotEmpty() &&
                 budgetInVal.isNotEmpty())
             {
-                //Add a new budget to the dataSet
+                // Add a new budget to the dataSet
                 val entry = BudgetData(budgetName = budgetInText, budgetValue = budgetInVal.toFloat(), balanceValue = budgetInVal.toFloat())
                 budgetViewModel.addBudget(entry)
 
-                //Clear EditText fields
+                // Clear EditText fields
                 budgetInName.text.clear()
                 budgetInValue.text.clear()
             }
