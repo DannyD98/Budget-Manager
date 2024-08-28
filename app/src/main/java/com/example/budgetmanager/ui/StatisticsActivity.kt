@@ -32,7 +32,6 @@ class StatisticsActivity : AppCompatActivity() {
         val extras = intent.extras
         val budgetId = extras?.getLong("ID") ?: 0
         val budgetTitle = extras?.getString("Title") ?: "Unknown"
-        val spent = extras?.getFloat("Spent") ?: 0f
 
         val statisticsViewModel = ViewModelProvider(this)[StatisticsViewModel::class.java]
 
@@ -40,14 +39,21 @@ class StatisticsActivity : AppCompatActivity() {
         this.budgetTitle.text = budgetTitle
 
         // Configure the UI parameters of the PieChart
-        configurePieChart(spent)
+        configurePieChart()
 
         // Fetch data through ViewModel
-        statisticsViewModel.getExpensesSumByType(budgetId)
+        statisticsViewModel.getTotalExpenseSum(budgetId)
+        statisticsViewModel.getExpenseSumsByBudget(budgetId)
+
+        statisticsViewModel.totalExpenses.observe(this) { total ->
+            //Update PieChart center text
+            val expenseCenterText = String.format(Locale.US, "%.2f", total) + " BGN\nTotal expenses"
+            pieChart.centerText = expenseCenterText
+        }
 
         // Observe for data changes of the ViewModel LiveData containing expense sums by type
-        statisticsViewModel.expensesSum.observe(this) { sum ->
-            updatePieChartData(sum)
+        statisticsViewModel.expensesSum.observe(this) { sums ->
+            updatePieChartData(sums)
         }
 
         // Back button click handler
@@ -62,13 +68,11 @@ class StatisticsActivity : AppCompatActivity() {
         pieChart = findViewById(R.id.statisticsPieChart)
     }
 
-    private fun configurePieChart(totalSpent: Float) {
-        val expenseCenterText = String.format(Locale.US, "%.2f", totalSpent) + " BGN\nTotal expenses"
+    private fun configurePieChart() {
         val orientation = resources.configuration.orientation
 
         // Configuration for the center of the PieChart
         pieChart.setCenterTextSize(16f)
-        pieChart.centerText = expenseCenterText
         pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
         pieChart.holeRadius = 60f
         pieChart.setHoleColor(0x00000000)

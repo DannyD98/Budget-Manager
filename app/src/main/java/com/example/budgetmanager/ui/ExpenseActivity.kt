@@ -45,7 +45,7 @@ class ExpenseActivity : AppCompatActivity() {
         initViews()
 
         // Fetch all expenses from DB
-        expenseViewModel.loadExpenses(budgetId)
+        expenseViewModel.loadExpensesByBudget(budgetId)
 
         // Configure RecyclerView, Adapter and Decorator
         val expenseAdapter = ExpenseAdapter(this, expenseViewModel, budgetId)
@@ -64,10 +64,10 @@ class ExpenseActivity : AppCompatActivity() {
         }
 
         // Observer for change of the Balance data
-        expenseViewModel.balance.observe(this) { balance ->
-            val spentValue = (budgetValue - balance)
-            currentSpentVal.text = String.format(Locale.US,"%.2f", spentValue)
-            spentProgressBar.progress = ((spentValue * 100) / budgetValue).toInt()
+        expenseViewModel.totalSpent.observe(this) { totalSpent ->
+            val totalSum = totalSpent ?: 0f
+            currentSpentVal.text = String.format(Locale.US,"%.2f", totalSum)
+            spentProgressBar.progress = ((totalSum * 100) / budgetValue).toInt()
         }
 
         // UI Updates

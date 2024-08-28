@@ -26,3 +26,9 @@ Using [MPAndroidCharts](https://github.com/PhilJay/MPAndroidChart?tab=readme-ov-
 - The UI and UX must be consistent in both portrait and landscape orientation
 - The app should implement local persistence of the data
 - Data and user input should be handled through Dialogs
+
+## FIGMA Design
+Link to [Design](https://www.figma.com/design/htWTkWxpnyHlCPITgg6czO/Budget-Manager?node-id=0-1&t=CsKHtOok0kLM4Q3F-1)
+
+## UML
+In progress...

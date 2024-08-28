@@ -38,7 +38,7 @@ class BudgetInputDialog(context: Context, private val budgetViewModel: BudgetVie
                 budgetInVal.isNotEmpty())
             {
                 // Add a new budget to the dataSet
-                val entry = BudgetData(budgetName = budgetInText, budgetValue = budgetInVal.toFloat(), balanceValue = budgetInVal.toFloat())
+                val entry = BudgetData(budgetName = budgetInText, budgetValue = budgetInVal.toFloat())
                 budgetViewModel.addBudget(entry)
 
                 // Clear EditText fields

@@ -58,7 +58,6 @@ class BudgetAdapter(
             extras.putLong("ID", dataset[position].budgetId)
             extras.putString("Title", dataset[position].budgetName)
             extras.putFloat("Budget", dataset[position].budgetValue)
-            extras.putFloat("Balance", dataset[position].balanceValue)
             intent.putExtras(extras)
             // Start the ExpensesActivity
             context.startActivity(intent)
@@ -68,13 +67,12 @@ class BudgetAdapter(
         holder.budgetStatsBtn.setOnClickListener {
             val intent = Intent(context, StatisticsActivity::class.java)
             val extras = Bundle()
-            val spent = dataset[position].budgetValue - dataset[position].balanceValue
 
+            // Configure the package to be sent to StatisticsActivity
             extras.putLong("ID", dataset[position].budgetId)
             extras.putString("Title", dataset[position].budgetName)
-            extras.putFloat("Spent", spent)
             intent.putExtras(extras)
-
+            // Start StatisticsActivity
             context.startActivity(intent)
         }
     }

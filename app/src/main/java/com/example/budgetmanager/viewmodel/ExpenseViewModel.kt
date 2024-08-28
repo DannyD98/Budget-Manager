@@ -15,16 +15,16 @@ class ExpenseViewModel(application: Application): AndroidViewModel(application) 
     private val expenseRepository: ExpenseRepository
     private val budgetRepository: BudgetRepository
     lateinit var expenses : LiveData<List<ExpenseData>>
-    lateinit var balance: LiveData<Float>
+    lateinit var totalSpent: LiveData<Float>
 
     init {
         expenseRepository = ExpenseRepository(AppDatabase.getDatabase(application).expenseDao())
         budgetRepository = BudgetRepository(AppDatabase.getDatabase(application).budgetDao())
     }
 
-    fun loadExpenses(budgetId: Long) {
-        expenses = expenseRepository.getExpenses(budgetId)
-        balance = budgetRepository.getBalance(budgetId)
+    fun loadExpensesByBudget(budgetId: Long) {
+        expenses = expenseRepository.getExpensesByBudget(budgetId)
+        totalSpent = expenseRepository.getAllExpensesSum(budgetId)
     }
 
     fun addExpense(expenseData: ExpenseData) {
@@ -42,12 +42,6 @@ class ExpenseViewModel(application: Application): AndroidViewModel(application) 
     fun updateExpense(expenseData: ExpenseData) {
         viewModelScope.launch(Dispatchers.IO) {
             expenseRepository.updateExpense(expenseData)
-        }
-    }
-
-    fun updateBalance(balance: Float, budgetId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            budgetRepository.updateBalance(balance, budgetId)
         }
     }
 }

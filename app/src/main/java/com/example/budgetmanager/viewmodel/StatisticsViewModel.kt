@@ -9,12 +9,17 @@ import com.example.budgetmanager.repository.ExpenseRepository
 class StatisticsViewModel(application: Application): AndroidViewModel(application) {
     private val expenseRepository: ExpenseRepository
     lateinit var expensesSum: LiveData<Map<String, Float>>
+    lateinit var totalExpenses: LiveData<Float>
 
     init {
         expenseRepository = ExpenseRepository(AppDatabase.getDatabase(application).expenseDao())
     }
 
-    fun getExpensesSumByType(budgetId: Long) {
-        expensesSum = expenseRepository.getExpensesSumByType(budgetId)
+    fun getExpenseSumsByBudget(budgetId: Long) {
+        expensesSum = expenseRepository.getExpenseSumsByBudget(budgetId)
+    }
+
+    fun getTotalExpenseSum(budgetId: Long) {
+        totalExpenses = expenseRepository.getAllExpensesSum(budgetId)
     }
 }

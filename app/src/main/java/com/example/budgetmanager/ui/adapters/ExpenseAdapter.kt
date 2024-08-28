@@ -49,12 +49,6 @@ class ExpenseAdapter(
 
         // Expense Remove button handler
         holder.expenseDeleteBtn.setOnClickListener {
-            //Update balance
-            val newBalance = expenseViewModel.balance.value?.plus(dataset[position].expenseVal)
-            if (newBalance != null) {
-                expenseViewModel.updateBalance(newBalance, budgetId)
-            }
-
             // Delete the expense
             expenseViewModel.deleteExpense(dataset[position])
             this.notifyItemRangeChanged(position, dataset.size)
