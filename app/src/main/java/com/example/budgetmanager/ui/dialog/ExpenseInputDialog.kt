@@ -122,20 +122,11 @@ class ExpenseInputDialog(
 
         // Add the new expense entry to DB
         expenseViewModel.addExpense(expense)
-
-        // Update balance
-        val newBalance = expenseViewModel.balance.value?.minus(expense.expenseVal)
-        if (newBalance != null) {
-            expenseViewModel.updateBalance(newBalance, budgetId)
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateExpense(infoIn: String, costIn: String) {
         if (expenseData != null) {
-            val newBalance: Float
-            val expenseDiff = costIn.toFloat() - expenseData.expenseVal
-
             // Update the fields of the edit expense
             expenseData.expenseDescription = infoIn
             expenseData.expenseVal = costIn.toFloat()
@@ -144,10 +135,6 @@ class ExpenseInputDialog(
 
             // Update the expense in DB
             expenseViewModel.updateExpense(expenseData)
-
-            // Update balance
-            newBalance = expenseViewModel.balance.value?.minus(expenseDiff)!!
-            expenseViewModel.updateBalance(newBalance, budgetId)
 
             // Close the dialog on update
             dismiss()

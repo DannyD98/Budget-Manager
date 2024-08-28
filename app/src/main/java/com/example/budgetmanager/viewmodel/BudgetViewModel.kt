@@ -30,9 +30,9 @@ class BudgetViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun removeBudget(budgetData: BudgetData) {
+    fun deleteBudget(budgetData: BudgetData) {
         viewModelScope.launch(Dispatchers.IO) {
-            budgetRepository.removeBudget(budgetData)
+            budgetRepository.deleteBudget(budgetData)
         }
     }
 }

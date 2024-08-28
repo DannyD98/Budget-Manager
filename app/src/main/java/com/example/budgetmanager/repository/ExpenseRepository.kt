@@ -5,7 +5,7 @@ import com.example.budgetmanager.database.dao.ExpenseDao
 import com.example.budgetmanager.database.model.ExpenseData
 
 class ExpenseRepository(private val expenseDao: ExpenseDao) {
-    fun getExpenses(budgetId: Long): LiveData<List<ExpenseData>> = expenseDao.getExpenses(budgetId)
+    fun getExpensesByBudget(budgetId: Long): LiveData<List<ExpenseData>> = expenseDao.getExpenses(budgetId)
 
     suspend fun addExpense(expenseData: ExpenseData) {
         expenseDao.addExpense(expenseData)
@@ -19,5 +19,9 @@ class ExpenseRepository(private val expenseDao: ExpenseDao) {
         expenseDao.updateExpense(expenseData)
     }
 
-    fun getExpensesSumByType(budgetId: Long): LiveData<Map<String, Float>> = expenseDao.getExpensesSumByType(budgetId)
+    fun getExpenseSumsByBudget(budgetId: Long): LiveData<Map<String, Float>> = expenseDao.getExpenseSumsByBudget(budgetId)
+
+    fun getAllExpensesSum(budgetId: Long): LiveData<Float> {
+        return expenseDao.getAllExpensesSum(budgetId)
+    }
 }

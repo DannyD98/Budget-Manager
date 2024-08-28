@@ -23,7 +23,7 @@ class ConfirmationDialog(context: Context, private val budgetViewModel: BudgetVi
 
         yesButton.setOnClickListener {
             // Delete the passed budget entry
-            budgetViewModel.removeBudget(budgetData)
+            budgetViewModel.deleteBudget(budgetData)
 
             // Close the dialog
             dismiss()
