@@ -17,8 +17,10 @@ import androidx.annotation.RequiresApi
 import com.example.budgetmanager.R
 import com.example.budgetmanager.database.model.ExpenseAction
 import com.example.budgetmanager.database.model.ExpenseData
+import com.example.budgetmanager.ui.CustomValueFormatter
 import com.example.budgetmanager.viewmodel.ExpenseViewModel
 import java.time.LocalDate
+import java.util.Locale
 
 class ExpenseInputDialog(
     context: Context,
@@ -27,7 +29,12 @@ class ExpenseInputDialog(
     private var expenseAction: ExpenseAction,
     private val expenseData: ExpenseData?
 ): Dialog(context, R.style.DialogStyle) {
-    private var expenseType = ""
+    private var expenseTypeValue = ""
+    private lateinit var closeBtn: ImageButton
+    private lateinit var expenseInfo: EditText
+    private lateinit var expenseTypeSpnr: Spinner
+    private lateinit var expenseCost: EditText
+    private lateinit var expenseAddBtn: Button
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,11 +44,7 @@ class ExpenseInputDialog(
         setContentView(R.layout.expense_input_dialog)
         window?.setBackgroundDrawableResource(R.drawable.dialog_background)
 
-        val closeBtn: ImageButton = findViewById(R.id.expenseCloseBtn)
-        val expenseInfo: EditText = findViewById(R.id.expenseInfoInput)
-        val expenseType: Spinner = findViewById(R.id.expenseTypeInput)
-        val expenseCost: EditText = findViewById(R.id.expenseValueInput)
-        val expenseAddBtn: Button = findViewById(R.id.expenseAddBtn)
+        initViews()
 
         // Create an ArrayAdapter to be used for the Expense Type Spinner
         ArrayAdapter.createFromResource(
@@ -52,40 +55,25 @@ class ExpenseInputDialog(
             // Specify the layout to use when the list of choices appears.
             adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
             // Apply the adapter to the spinner.
-            expenseType.adapter = adapter
+            expenseTypeSpnr.adapter = adapter
         }
 
-        // Define the behavior in case of selecting a Spinner element and default
-        expenseType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        // Define the behavior in case of selecting a Spinner element and default no selection
+        expenseTypeSpnr.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // Handle the selected item
-                this@ExpenseInputDialog.expenseType = parent?.getItemAtPosition(position).toString()
+                expenseTypeValue = parent?.getItemAtPosition(position).toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Use Personal in case of no selection
-                this@ExpenseInputDialog.expenseType = "Personal"
+                expenseTypeValue = "Personal"
             }
         }
 
         // Configure the dialog in case of Update
         if(expenseAction == ExpenseAction.Update) {
-            //Expense Type Spinner
-            this.expenseType = expenseData!!.expenseType
-            val typeOptions = context.resources.getStringArray(R.array.expense_types)
-
-            when(val typeIndex = typeOptions.indexOf(this.expenseType)) {
-                -1 -> expenseType.setSelection(typeOptions.indexOf("Personal"))
-                else -> expenseType.setSelection(typeIndex)
-            }
-
-            // Set EditText fields to be edited
-            expenseCost.setText(expenseData.expenseVal.toString())
-            expenseInfo.setText(expenseData.expenseDescription)
-            expenseType.setSelection(typeOptions.indexOf(expenseData.expenseType))
-
-            // Switch to Update button
-            expenseAddBtn.text = context.getString(R.string.update)
+            configureUpdate()
         }
 
         // Close the dialog handle
@@ -93,15 +81,16 @@ class ExpenseInputDialog(
             dismiss()
         }
 
-        // Behavior in case of Add button click
+        // Add/Edit button handler
         expenseAddBtn.setOnClickListener {
             val infoIn = expenseInfo.text.toString()
             val costIn = expenseCost.text.toString()
 
-            if(infoIn.isNotEmpty() &&
-                costIn.isNotEmpty()
-            )
+            if(infoIn.isEmpty() || costIn.isEmpty())
             {
+                // Missing data for some of the fields
+                Toast.makeText(this.context, "Enter all fields", Toast.LENGTH_SHORT).show()
+            } else if(CustomValueFormatter.checkValue(costIn)) {
                 when(expenseAction) {
                     ExpenseAction.Add -> addExpense(infoIn, costIn)
                     ExpenseAction.Update -> updateExpense(infoIn, costIn)
@@ -109,16 +98,43 @@ class ExpenseInputDialog(
 
                 expenseInfo.text.clear()
                 expenseCost.text.clear()
-            }
-            else {
-                Toast.makeText(this.context, "Enter all fields", Toast.LENGTH_SHORT).show()
+            } else {
+                // Report error with the input value
+                Toast.makeText(this.context, "Invalid expense value, use format like 123.99", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+    private fun initViews() {
+        closeBtn = findViewById(R.id.expenseCloseBtn)
+        expenseInfo = findViewById(R.id.expenseInfoInput)
+        expenseTypeSpnr  = findViewById(R.id.expenseTypeInput)
+        expenseCost = findViewById(R.id.expenseValueInput)
+        expenseAddBtn = findViewById(R.id.expenseAddBtn)
+    }
+
+    private fun configureUpdate() {
+        // Set the value of Expense Type Spinner
+        val typeOptions = context.resources.getStringArray(R.array.expense_types)
+        expenseTypeValue = expenseData!!.expenseType
+        when(val typeIndex = typeOptions.indexOf(expenseTypeValue)) {
+            -1 -> expenseTypeSpnr.setSelection(typeOptions.indexOf("Personal"))
+            else -> expenseTypeSpnr.setSelection(typeIndex)
+        }
+
+        // Set EditText fields to be edited
+        val cost = String.format(Locale.US, "%.2f",expenseData.expenseVal)
+        expenseCost.setText(cost)
+        expenseInfo.setText(expenseData.expenseDescription)
+        expenseTypeSpnr.setSelection(typeOptions.indexOf(expenseData.expenseType))
+
+        // Switch to Update button
+        expenseAddBtn.text = context.getString(R.string.update_expense)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun addExpense(infoIn: String, costIn: String) {
-        val expense = ExpenseData(expenseVal = costIn.toFloat(), expenseDescription = infoIn, expenseDate = LocalDate.now().toString(), expenseType = expenseType, budgetID = budgetId)
+        val expense = ExpenseData(expenseVal = costIn.toFloat(), expenseDescription = infoIn, expenseDate = LocalDate.now().toString(), expenseType = expenseTypeValue, budgetID = budgetId)
 
         // Add the new expense entry to DB
         expenseViewModel.addExpense(expense)
@@ -130,7 +146,7 @@ class ExpenseInputDialog(
             // Update the fields of the edit expense
             expenseData.expenseDescription = infoIn
             expenseData.expenseVal = costIn.toFloat()
-            expenseData.expenseType = expenseType
+            expenseData.expenseType = expenseTypeValue
             expenseData.expenseDate = LocalDate.now().toString()
 
             // Update the expense in DB

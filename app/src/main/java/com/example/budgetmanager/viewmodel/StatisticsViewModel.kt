@@ -17,9 +17,6 @@ class StatisticsViewModel(application: Application): AndroidViewModel(applicatio
 
     fun getExpenseSumsByBudget(budgetId: Long) {
         expensesSum = expenseRepository.getExpenseSumsByBudget(budgetId)
-    }
-
-    fun getTotalExpenseSum(budgetId: Long) {
-        totalExpenses = expenseRepository.getAllExpensesSum(budgetId)
+        totalExpenses = expenseRepository.getAllExpensesSumByBudget(budgetId)
     }
 }

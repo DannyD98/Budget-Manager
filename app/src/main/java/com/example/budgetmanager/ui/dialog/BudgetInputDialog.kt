@@ -10,23 +10,26 @@ import android.widget.ImageButton
 import android.widget.Toast
 import com.example.budgetmanager.R
 import com.example.budgetmanager.database.model.BudgetData
+import com.example.budgetmanager.ui.CustomValueFormatter
 import com.example.budgetmanager.viewmodel.BudgetViewModel
 
 class BudgetInputDialog(context: Context, private val budgetViewModel: BudgetViewModel): Dialog(context,
     R.style.DialogStyle
 ) {
+    private lateinit var closeBtn: ImageButton
+    private lateinit var addBtn: Button
+    private lateinit var budgetInName: EditText
+    private lateinit var budgetInValue: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.budget_input_dialog)
         window?.setBackgroundDrawableResource(R.drawable.dialog_background)
 
-        val close: ImageButton = findViewById(R.id.budgDialogCloseBtn)
-        val addBtn: Button = findViewById(R.id.DialogAddBtn)
-        val budgetInName: EditText = findViewById(R.id.expenseInfoInput)
-        val budgetInValue: EditText = findViewById(R.id.expenseValueInput)
+        initViews()
 
-        close.setOnClickListener {
+        closeBtn.setOnClickListener {
             dismiss()
         }
 
@@ -34,20 +37,29 @@ class BudgetInputDialog(context: Context, private val budgetViewModel: BudgetVie
             val budgetInText = budgetInName.text.toString()
             val budgetInVal = budgetInValue.text.toString()
 
-            if(budgetInText.isNotEmpty() &&
-                budgetInVal.isNotEmpty())
+            if(budgetInText.isEmpty() || budgetInVal.isEmpty())
             {
-                // Add a new budget to the dataSet
+                // Missing data for some of the fields
+                Toast.makeText(this.context, "Enter all fields", Toast.LENGTH_SHORT).show()
+            } else if(CustomValueFormatter.checkValue(budgetInVal)) {
+                // Add a new budget to the dataSet in case the data is valid
                 val entry = BudgetData(budgetName = budgetInText, budgetValue = budgetInVal.toFloat())
                 budgetViewModel.addBudget(entry)
 
                 // Clear EditText fields
                 budgetInName.text.clear()
                 budgetInValue.text.clear()
-            }
-            else {
-                Toast.makeText(this.context, "Enter all fields", Toast.LENGTH_SHORT).show()
+            } else {
+                // Report error with the input value
+                Toast.makeText(this.context, "Invalid budget value, use format like 123.99", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun initViews() {
+        closeBtn = findViewById(R.id.budgDialogCloseBtn)
+        addBtn = findViewById(R.id.DialogAddBtn)
+        budgetInName = findViewById(R.id.expenseInfoInput)
+        budgetInValue = findViewById(R.id.expenseValueInput)
     }
 }

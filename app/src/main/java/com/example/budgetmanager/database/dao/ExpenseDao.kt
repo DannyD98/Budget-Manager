@@ -27,5 +27,5 @@ interface ExpenseDao {
     fun getExpenseSumsByBudget(budgetId: Long): LiveData<Map<@MapColumn(columnName = "expenseType") String, @MapColumn(columnName = "expenseSum") Float>>
 
     @Query("Select sum(expenseVal) as expenseSum from expense where budgetID = :budgetId")
-    fun getAllExpensesSum(budgetId: Long): LiveData<Float>
+    fun getAllExpensesSumByBudget(budgetId: Long): LiveData<Float>
 }

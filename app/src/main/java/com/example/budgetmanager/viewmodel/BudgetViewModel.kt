@@ -18,9 +18,6 @@ class BudgetViewModel(application: Application): AndroidViewModel(application) {
         val budgetDao = AppDatabase.getDatabase(application).budgetDao()
         budgetRepository = BudgetRepository(budgetDao)
 
-//        budgets = liveData(Dispatchers.IO) {
-//            emit(budgetRepository.getBudgets())
-//        }
         budgets = budgetRepository.getBudgets()
     }
 
