@@ -21,7 +21,8 @@
         <item>@color/yellow_300</item>
         <item>@color/deep_orange_300</item>
         <item>@color/pink_300</item>
-        <item>@color/blue_grey_300</item>
         <item>@color/brown_300</item>
+        <item>@color/blue_grey_300</item>
+        <item>@color/cyan_300</item>
     </array>
 </resources>

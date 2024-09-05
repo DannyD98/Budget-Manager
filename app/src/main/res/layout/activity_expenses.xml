@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_background"
-        android:text="@string/add_expense"
+        android:text="@string/new_expense"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/expensesBackBtn"
         app:layout_constraintEnd_toEndOf="parent"

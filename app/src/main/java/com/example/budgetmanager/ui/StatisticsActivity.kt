@@ -42,12 +42,12 @@ class StatisticsActivity : AppCompatActivity() {
         configurePieChart()
 
         // Fetch data through ViewModel
-        statisticsViewModel.getTotalExpenseSum(budgetId)
         statisticsViewModel.getExpenseSumsByBudget(budgetId)
 
         statisticsViewModel.totalExpenses.observe(this) { total ->
             //Update PieChart center text
-            val expenseCenterText = String.format(Locale.US, "%.2f", total) + " BGN\nTotal expenses"
+            val totalSum = total ?: 0f
+            val expenseCenterText = String.format(Locale.US, "%.2f", totalSum) + " BGN\nTotal expenses"
             pieChart.centerText = expenseCenterText
         }
 

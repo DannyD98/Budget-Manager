@@ -6,25 +6,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.budgetmanager.database.AppDatabase
 import com.example.budgetmanager.database.model.ExpenseData
-import com.example.budgetmanager.repository.BudgetRepository
 import com.example.budgetmanager.repository.ExpenseRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ExpenseViewModel(application: Application): AndroidViewModel(application) {
     private val expenseRepository: ExpenseRepository
-    private val budgetRepository: BudgetRepository
     lateinit var expenses : LiveData<List<ExpenseData>>
     lateinit var totalSpent: LiveData<Float>
 
     init {
         expenseRepository = ExpenseRepository(AppDatabase.getDatabase(application).expenseDao())
-        budgetRepository = BudgetRepository(AppDatabase.getDatabase(application).budgetDao())
     }
 
     fun loadExpensesByBudget(budgetId: Long) {
         expenses = expenseRepository.getExpensesByBudget(budgetId)
-        totalSpent = expenseRepository.getAllExpensesSum(budgetId)
+        totalSpent = expenseRepository.getAllExpensesSumByBudget(budgetId)
     }
 
     fun addExpense(expenseData: ExpenseData) {

@@ -21,7 +21,7 @@ class ExpenseRepository(private val expenseDao: ExpenseDao) {
 
     fun getExpenseSumsByBudget(budgetId: Long): LiveData<Map<String, Float>> = expenseDao.getExpenseSumsByBudget(budgetId)
 
-    fun getAllExpensesSum(budgetId: Long): LiveData<Float> {
-        return expenseDao.getAllExpensesSum(budgetId)
+    fun getAllExpensesSumByBudget(budgetId: Long): LiveData<Float> {
+        return expenseDao.getAllExpensesSumByBudget(budgetId)
     }
 }
