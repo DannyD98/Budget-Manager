@@ -44,6 +44,7 @@ class ExpenseInputDialog(
         setContentView(R.layout.expense_input_dialog)
         window?.setBackgroundDrawableResource(R.drawable.dialog_background)
 
+        // Access layout view elements
         initViews()
 
         // Create an ArrayAdapter to be used for the Expense Type Spinner
@@ -76,7 +77,7 @@ class ExpenseInputDialog(
             configureUpdate()
         }
 
-        // Close the dialog handle
+        // Close button handler
         closeBtn.setOnClickListener {
             dismiss()
         }

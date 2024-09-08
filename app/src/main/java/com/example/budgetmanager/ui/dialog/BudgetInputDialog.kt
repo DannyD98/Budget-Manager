@@ -27,12 +27,15 @@ class BudgetInputDialog(context: Context, private val budgetViewModel: BudgetVie
         setContentView(R.layout.budget_input_dialog)
         window?.setBackgroundDrawableResource(R.drawable.dialog_background)
 
+        // Access layout view elements
         initViews()
 
+        // Close Button handler
         closeBtn.setOnClickListener {
             dismiss()
         }
 
+        // Add button handler
         addBtn.setOnClickListener {
             val budgetInText = budgetInName.text.toString()
             val budgetInVal = budgetInValue.text.toString()

@@ -21,6 +21,7 @@ class ExpenseAdapter(
 ): RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
     private var dataset: List<ExpenseData> = emptyList()
 
+    // Inner ViewHolder class with all widgets
     inner class ExpenseViewHolder(view: View): RecyclerView.ViewHolder(view){
         val expenseVal: TextView = view.findViewById(R.id.expenseValue)
         val expenseInfo: TextView = view.findViewById(R.id.expenseInfo)

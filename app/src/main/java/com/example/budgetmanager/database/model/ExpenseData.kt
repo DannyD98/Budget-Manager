@@ -23,5 +23,4 @@ data class ExpenseData(
     var expenseDate: String,
     var expenseType: String,
     val budgetID: Long
-    //TO BE CHECKED
 )

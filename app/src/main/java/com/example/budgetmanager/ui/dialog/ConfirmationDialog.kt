@@ -21,6 +21,7 @@ class ConfirmationDialog(context: Context, private val budgetViewModel: BudgetVi
         val yesButton: Button = findViewById(R.id.confirmBtn)
         val cancelButton: Button = findViewById(R.id.cancelBtn)
 
+        // Confirmation button handler
         yesButton.setOnClickListener {
             // Delete the passed budget entry
             budgetViewModel.deleteBudget(budgetData)
@@ -29,6 +30,7 @@ class ConfirmationDialog(context: Context, private val budgetViewModel: BudgetVi
             dismiss()
         }
 
+        // Cancel button handler
         cancelButton.setOnClickListener {
             // Delete canceled - Close the dialog
             dismiss()
