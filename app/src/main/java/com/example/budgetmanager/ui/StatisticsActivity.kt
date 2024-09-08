@@ -44,6 +44,7 @@ class StatisticsActivity : AppCompatActivity() {
         // Fetch data through ViewModel
         statisticsViewModel.getExpenseSumsByBudget(budgetId)
 
+        // Observe for data changes of the ViewModel LiveData containing total expense sum
         statisticsViewModel.totalExpenses.observe(this) { total ->
             //Update PieChart center text
             val totalSum = total ?: 0f
@@ -83,7 +84,7 @@ class StatisticsActivity : AppCompatActivity() {
 
         pieChart.description.isEnabled = false
 
-        // Configure the PieChart Legend
+        // Configure the PieChart Legend based on device orientation
         pieChart.legend.textSize = 16f
         if(orientation == Configuration.ORIENTATION_PORTRAIT) {
             pieChart.legend.xEntrySpace = 32f

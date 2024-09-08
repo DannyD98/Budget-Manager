@@ -1,7 +1,7 @@
 ﻿# Budget-Manager
 
 ## App usage
-The app will be used for Bachelor degree thesis and general purpose
+The app will be used for Bachelor degree thesis
 
 ## Icons
 Icons by [Icons8](https://icons8.com/)
